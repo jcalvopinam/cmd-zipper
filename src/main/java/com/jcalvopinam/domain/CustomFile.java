@@ -1,6 +1,6 @@
 package com.jcalvopinam.domain;
 
-import com.jcalvopinam.Utils.Commons;
+import com.jcalvopinam.utils.Commons;
 
 /**
  * Created by juanca on 4/20/17.
