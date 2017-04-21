@@ -1,4 +1,4 @@
-package com.jcalvopinam.Utils;
+package com.jcalvopinam.utils;
 
 /**
  * Created by juanca on 4/20/17.
