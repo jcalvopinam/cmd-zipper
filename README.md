@@ -22,7 +22,7 @@ mvn clean install
 The application will show something like this:
 
 
-![alt text](https://github.com/juanca87/cmd-zipper/src/main/resources/screenshots/menu.jpg "Menu")
+![alt text](https://github.com/juanca87/cmd-zipper/blob/master/src/main/resources/screenshots/menu.jpg?raw=true "Menu")
 
 
 3. Complete according to the Menu
