@@ -16,7 +16,7 @@ mvn clean install
 2. The project is a Maven application, you can run inside of your ide or
  from terminal with the following command: 
  ```
- java -classpath cmd-zipper-0.0.1-SNAPSHOT.jar com.jcalvopinam.CmdZipperApplication
+ java -classpath cmd-zipper-jar-with-dependencies.jar com.jcalvopinam.CmdZipperApplication
  ```
 
 The application will show something like this:
