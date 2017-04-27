@@ -30,7 +30,7 @@ public class CmdZipperApplication {
     public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
-        String option = "";
+        String option;
 
         do {
             System.out.println("M E N U");
@@ -40,28 +40,32 @@ public class CmdZipperApplication {
 
             System.out.print("Please choose an option: ");
             option = scanner.nextLine();
+            options(option, scanner);
 
-        } while (option != "" && !option.matches(Commons.REGEX_NUMBERS));
-
-        switch (Integer.valueOf(option)) {
-            case 1:
-                System.out.println("Please enter the full file path: ");
-                String fileToZip = scanner.nextLine();
-                System.out.println("Please enter the size file (MB) to split: ");
-                int fileSize = scanner.nextInt();
-                Zipping zipping = new Zipping(fileToZip, fileSize);
-                break;
-            case 2:
-                System.out.println("Please enter the full path of the first part: ");
-                String fileToUnzip = scanner.nextLine();
-                if (Commons.validateFirstPart(fileToUnzip)) {
-                    Unzipping unzipping = new Unzipping(fileToUnzip);
-                } else {
-                    System.out.println("Wrong file!");
-                }
-                break;
-        }
+        } while (!option.equals(String.valueOf(0)));
         scanner.close();
     }
 
+    private static void options(String option, Scanner scanner) throws IOException {
+        if (option.matches(Commons.REGEX_NUMBERS)) {
+            switch (Integer.valueOf(option)) {
+                case 1:
+                    System.out.println("Please enter the full file path: ");
+                    String fileToZip = scanner.nextLine();
+                    System.out.println("Please enter the size file (MB) to split: ");
+                    int fileSize = scanner.nextInt();
+                    Zipping zipping = new Zipping(fileToZip, fileSize);
+                    break;
+                case 2:
+                    System.out.println("Please enter the full path of the first part: ");
+                    String fileToUnzip = scanner.nextLine();
+                    if (Commons.validateFirstPart(fileToUnzip)) {
+                        Unzipping unzipping = new Unzipping(fileToUnzip);
+                    } else {
+                        System.out.println("Wrong file!");
+                    }
+                    break;
+            }
+        }
+    }
 }
