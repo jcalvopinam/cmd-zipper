@@ -22,12 +22,15 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
  * Created by juanca on 4/19/17.
  */
 public class Unzipping {
+
+    private final static String REBUILT = "rebuilt";
 
     public Unzipping(String path) throws IOException {
         CustomFile customFile = new CustomFile();
@@ -57,31 +60,38 @@ public class Unzipping {
 
         if (fileInputStream.size() > 0) {
             String fileNameOutput = String.format("%s%s", customFile.getPath(), customFile.getFileName());
-            //TODO: Fix output extension
-            OutputStream os = new BufferedOutputStream(new FileOutputStream(fileNameOutput + "_.txt"));
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(fileNameOutput));
             try {
                 System.out.println("Please wait while the files are joined: ");
+
+                ZipEntry ze;
                 for (InputStream inputStream : fileInputStream) {
                     is = new ZipInputStream(inputStream);
+                    ze = is.getNextEntry();
+                    customFile.setFileName(String.format("%s_%s", REBUILT, ze.getName()));
 
-                    while (is.getNextEntry() != null) {
-                        byte[] buffer = new byte[CustomFile.BYTE_SIZE];
+                    byte[] buffer = new byte[CustomFile.BYTE_SIZE];
 
-                        for (int readBytes; (readBytes = is.read(buffer, 0, CustomFile.BYTE_SIZE)) > -1; ) {
-                            os.write(buffer, 0, readBytes);
-                            System.out.print(".");
-                        }
+                    for (int readBytes; (readBytes = is.read(buffer, 0, CustomFile.BYTE_SIZE)) > -1; ) {
+                        os.write(buffer, 0, readBytes);
+                        System.out.print(".");
                     }
                 }
             } finally {
                 os.flush();
                 os.close();
                 is.close();
+                renameFinalFile(customFile, fileNameOutput);
             }
         } else {
             throw new FileNotFoundException("Error: The file not exist!");
         }
         System.out.println("\nEnded process!");
+    }
+
+    private static void renameFinalFile(CustomFile customFile, String fileNameOutput) {
+        File output = new File(fileNameOutput);
+        output.renameTo(new File(customFile.getPath() + customFile.getFileName()));
     }
 
 }
